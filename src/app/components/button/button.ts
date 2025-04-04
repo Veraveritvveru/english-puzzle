@@ -13,4 +13,8 @@ export class Button extends BaseComponent {
          textContent: textContent,
       })
    }
+
+   disableBtn() {
+      this.setAttributes({disabled: ''})
+   }
 }

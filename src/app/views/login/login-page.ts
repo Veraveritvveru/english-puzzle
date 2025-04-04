@@ -7,7 +7,7 @@ export class LoginPage extends BaseComponent {
 
   constructor() {
       super({tagName:'main', classNames: ['login']});
-      const form = new FormComponent();
+      const form = new FormComponent('loginForm');
       this.append(form);
 
     }

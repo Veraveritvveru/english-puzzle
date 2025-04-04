@@ -1,4 +1,14 @@
 .button {
-   cursor: pointer;
-   width: 80px;
+  cursor: pointer;
+  width: 80px;
 }
+
+.button:disabled {
+  opacity: 0.5;
+}
+
+// .button:active,
+// .button:hover {
+//   color: #FF5050;
+//   transition: none;
+// }

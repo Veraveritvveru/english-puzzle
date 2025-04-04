@@ -23,7 +23,7 @@ export default class BaseComponent<T extends HTMLElement = HTMLElement> {
 
   }
 
-  public getElement(): HTMLElement {
+  public getElement() {
     return this.element;
   }
 
@@ -33,10 +33,9 @@ export default class BaseComponent<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  public publicremoveClass(classNames: string[]): void {
-    if (classNames.length > 0) {
-      classNames.forEach((className) => this.element.classList.add(className));
-    }
+  public removeClass(className: string): void {
+    this.element.classList.remove(className);
+    
   }
 
   public toggleClass(className: string): void {
