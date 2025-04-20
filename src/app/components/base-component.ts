@@ -19,8 +19,6 @@ export default class BaseComponent<T extends HTMLElement = HTMLElement> {
       this.setAttributes(params.attributes);
     }
     this.setTextContent(params.textContent ?? '');
-    
-
   }
 
   public getElement() {
@@ -35,7 +33,7 @@ export default class BaseComponent<T extends HTMLElement = HTMLElement> {
 
   public removeClass(className: string): void {
     this.element.classList.remove(className);
-    
+
   }
 
   public toggleClass(className: string): void {
@@ -48,13 +46,13 @@ export default class BaseComponent<T extends HTMLElement = HTMLElement> {
   }
 
 
-  public setAttributes(attribute: Record<string, string>) {
+  public setAttributes(attribute: Record<string, string>): void {
     Object.entries(attribute).forEach(([attrName, value]) => {
       this.element.setAttribute(attrName, value);
     })
   }
 
-  public removeAttribute(attribute: string) {
+  public removeAttribute(attribute: string): void {
     this.element.removeAttribute(attribute);
   }
 

@@ -3,42 +3,51 @@ import './form.scss';
 import BaseComponent from "../base-component";
 import { Button } from '../button/button';
 import { InputComponent } from '../input/input';
-import { ErrorMessage } from '../../utils/form-validation';
+import { ErrorMessage } from './errorMessage/error-message';
+import { user } from '../../store/user-store/user-store';
+import Router from '../../router/router';
 
 const INPUT_FIELDS_ARR = ['First Name', 'Surname'];
-const ID_ARR = ['firstName', 'surname'];
+const ID_ARR = ['firstName', 'surName'];
 
-const regExp = /^[a-zA-Z]+$/;
+const regExp: RegExp = /^[a-zA-Z]+$/;
 
 export class FormComponent extends BaseComponent {
-  submitBtn: Button;
+  inputsWrappers: BaseComponent[];
+  inputs: InputComponent[] = [];
+  router: Router;
 
-  constructor(formName: string) {
-    super({ tagName: 'form', classNames: ['login__form'] });
+  constructor(router: Router) {
+    super({ tagName: 'form', classNames: ['login__form'], attributes: { novalidate: '' } });
+    this.router = router;
 
-    this.setAttributes({ name: formName })
+    this.setAttributes({ name: 'loginForm' })
     this.drawTitle();
-    this.drawInputs();
-    this.submitBtn = new Button('submit', 'Log in');
-    this.append(this.submitBtn);
+    this.inputsWrappers = this.drawInputs();
+    this.drawSubmitButton();
 
     this.addListener('submit', (event) => {
-      if (!this.validateForm()) {
-        event.preventDefault();
-      }
-    })
-  }
+      event.preventDefault();
+      const userData = {
+        firstName: this.inputs[0].getValue(),
+        surname: this.inputs[1].getValue(),
+      };
 
-  drawTitle() {
+      user.setUser('user-data', userData);
+      // store.user.setUser(userData);
+  })
+}
+
+  private drawTitle(): void {
     const loginTitle = new BaseComponent({
       tagName: 'h2',
-      classNames: ['login__title'],
+      classNames: ['form__title'],
       textContent: 'Login',
     })
     this.append(loginTitle);
   }
 
-  drawInputs() {
+  private drawInputs(): BaseComponent[] {
     const inputs = INPUT_FIELDS_ARR.map((elem, i) => {
       const div = new BaseComponent({ tagName: 'div', classNames: ['input__wrapper'] });
 
@@ -55,39 +64,67 @@ export class FormComponent extends BaseComponent {
         autocomplete: 'off',
         minlength: "3",
       });
+      this.inputs.push(input);
 
-      const error = new ErrorMessage(input);
+      const error = new ErrorMessage(elem);
 
       input.addListener('input', () => {
         if (this.validateInput(input.getValue())) {
-          error.setClasses(['hidden']);
-          this.submitBtn.removeAttribute('disabled');
+          error.hideMessage();
         } else {
-          error.removeClass('hidden');
-          this.submitBtn.setAttributes({disabled: ''});
+          error.showMessage();
         }
       });
 
       div.append(label, input, error);
       return div;
     })
+
     this.append(...inputs);
+    return inputs;
   }
 
-  validateForm() {
-    const inputs = this.element.querySelectorAll('input');
+  private validateInput(value: string): boolean {
+    return value.length >= 3 && regExp.test(value);
+  }
 
-    for (const input of inputs) {
-      const value = input.value.trim();
-      if (value.length <= 3 || !regExp.test(value)) {
-        return false;
+  private drawSubmitButton(): void {
+    const submitBtn = new Button('submit', 'Log in');
+    submitBtn.disableBtn();
+    this.append(submitBtn);
+
+    this.addListener('input', () => {
+      if (this.inputs.every((input) => this.validateInput(input.getValue()))) {
+        submitBtn.enableBtn();
       }
-    }
-    return true;
+    });
+
+    submitBtn.addListener('click', (event) => {
+      event.preventDefault();
+      this.router.navigate('start-page');
+    })
   }
 
-  validateInput(value: string) {
-    return value.length > 3 && regExp.test(value);
-  }
+  // private getUserData() {
+  //   const dataForm = new FormData(this.getElement());
+  //   this.userData.name = `${dataForm.get('user-name')}`;
+  //   this.userData.surname = `${dataForm.get('user-surname')}`;
+  // }
+
+  // private saveUserData() {
+  //   LocalStorage.save('user-data', this.userData);
+  // }
+
+  // private moveToStartPage() {
+  //   this.router.navigate('start-page');
+  // }
+
+  // if (isValid(e)) {
+  //   const userData = { name: this.nameInput.getValue(), surname: this.surnameInput.getValue() };
+  //   saveUser(userData);
+  //   store.user.setUser(userData);
+  //   this.pushRouter(ROUTES.Start, store.user.hasUser());
+  //   store.game.removeActiveLink();
+  //   store.game.addActiveLink(ROUTES.Start);
+  // }
 }
-
