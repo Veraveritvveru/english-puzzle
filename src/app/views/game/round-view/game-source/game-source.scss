@@ -1,0 +1,15 @@
+@use '../../../../../global-styles/constants.scss';
+
+.game-source {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 720px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid constants.$primary-color;
+  background-color: constants.$bg-blue-color;
+
+  column-gap: 20px;
+  row-gap: 10px;
+}

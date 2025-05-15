@@ -1,9 +1,9 @@
 import './button.scss';
 import BaseComponent from "../base-component";
 
-type typeBtn = 'submit';
+type typeBtn = 'submit' | 'button';
 
-export class Button extends BaseComponent {
+export default class ButtonComponent extends BaseComponent {
    constructor(typeName: typeBtn, textContent?: string) {
       super({
          tagName: 'button',

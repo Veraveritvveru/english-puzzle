@@ -1,0 +1,36 @@
+@use '../../../global-styles/constants.scss';
+
+.word {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  font-size: 1.3rem;
+  background-color: constants.$primary-color;
+  padding: 5px 15px 5px 7px;
+}
+
+.left {
+  position: absolute;
+  top: 25%;
+  left: -10px;
+  width: 15px;
+  height: 15px;
+  background-color: constants.$bg-blue-color;
+  border-radius: 100%;
+}
+
+.right {
+  position: absolute;
+  top: 25%;
+  right: -8px;
+  width: 15px;
+  height: 15px;
+  background-color: constants.$primary-color;
+  border-radius: 100%;
+}
+
+// .empty {
+//   background-color: constants.$bg-blue-color;
+// }
+

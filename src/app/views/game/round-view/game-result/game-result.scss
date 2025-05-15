@@ -1,0 +1,19 @@
+@use '../../../../../global-styles/constants.scss';
+
+.game-result {
+  display: flex;
+  flex-direction: column;
+  // width: 700px;
+  // height: 350px;
+
+  border-radius: 5px;
+  border: 2px solid constants.$primary-color;
+  background-color: constants.$bg-blue-color;
+  background-size: contain;
+}
+
+.sentence-line {
+  display: flex;
+  height: 35px;
+  width: 700px;
+}

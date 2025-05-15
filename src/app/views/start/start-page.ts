@@ -1,29 +1,50 @@
+import './start-page.scss';
 import BaseComponent from "../../components/base-component";
 import Router from "../../router/router";
+import HeaderComponent from '../../components/header/header';
+import { user } from '../../store/user-store/user-store';
+import { PAGES } from '../../router/pages';
+
+const rulesText = `Click on words, collect phrases.
+Words can be drag and drop. Select tooltips on the menu.`
+
 
 export class StartPage extends BaseComponent {
-   router: Router;
+  router: Router;
+  startPageContent: BaseComponent;
+  header: HeaderComponent;
 
-   constructor(router: Router) {
-      super({tagName: 'section', classNames: ['start-page']});
-      this.router = router;
-      const title = new BaseComponent({tagName: 'p', classNames: ['start-page__title']});
-      const greeting = new BaseComponent({tagName: 'h2', classNames: ['start-page__greeting']});
-      const startBtn = new BaseComponent({tagName: 'div', classNames: ['start-btn'], textContent: 'Start'})
-      this.drawRules();
-      this.drawLogoutBtn();
-      this.append(title, greeting, startBtn);
-   }
+  constructor(router: Router, header: HeaderComponent) {
+    super({ tagName: 'section', classNames: ['start-page'] });
+    this.router = router;
+    this.header = header;
+    header.showLogoutBtn();
+    this.startPageContent = new BaseComponent({tagName: 'div', classNames: ['start-page__content']});    
+    this.append(this.startPageContent);
+    this.drawGreeting();
+    this.drawRules();
+    this.drawStartBtn();
+  }
 
-   drawRules() {
-      const rulesWrapper = new BaseComponent({tagName: 'div', classNames: ['rules-wrapper']})
-      const rules = new BaseComponent({tagName: 'p', classNames: ['rules-text'], textContent: 'heer are rules'});
-      this.append(rulesWrapper);
-      rulesWrapper.append(rules);
-   }
+  drawGreeting() {
+    const greeting = new BaseComponent({ tagName: 'h2', classNames: ['start-page__greeting'] });
+    this.startPageContent.append(greeting);
+    greeting.setTextContent(`Hello, ${user.getFullName()}!`);;
+    }
 
-   drawLogoutBtn() {
-      const logoutBtn = new BaseComponent({tagName: 'div', classNames: ['logout-btn'], textContent: 'log out'});
-      this.append(logoutBtn);
-   }
+  drawRules() {
+    const rulesWrapper = new BaseComponent({ tagName: 'div', classNames: ['rules-wrapper'] })
+    const rules = new BaseComponent({ tagName: 'p', classNames: ['rules-text'], textContent: rulesText });
+    this.startPageContent.append(rulesWrapper);
+    rulesWrapper.append(rules);
+  }
+
+  drawStartBtn() {
+    const startBtn = new BaseComponent({ tagName: 'div', classNames: ['button', 'start-btn'], textContent: 'Start' })
+    this.startPageContent.append(startBtn);
+
+    startBtn.addListener('click', () => {
+      this.router.navigate(PAGES.game);
+    })
+  }
 }

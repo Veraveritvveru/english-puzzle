@@ -5,64 +5,73 @@ import Router from './router/router';
 import { LoginPage } from "./views/login/login-page";
 import { PAGES } from './router/pages';
 import { StartPage } from './views/start/start-page';
+import HeaderComponent from './components/header/header';
+import { GamePage } from './views/game/game-page';
+import { user } from './store/user-store/user-store';
 
 export default class App {
   private readonly appContainer: BaseComponent;
   public router: Router;
+  public header: HeaderComponent;
 
   constructor() {
+    const body = document.body;
     const routes = this.createRoutes();
     this.router = new Router(routes);
-    this.appContainer = new BaseComponent({tagName: 'div', classNames: ['app']});
-    
+    this.header = new HeaderComponent(this.router);
+    this.appContainer = new BaseComponent({ tagName: 'div', classNames: ['app'] });
+    body.appendChild(this.header.getElement());
+
   }
 
   run() {
     const body = document.body;
-    this.appContainer.appendToParent(body);
+    body.appendChild(this.header.getElement());
+    body.appendChild(this.appContainer.getElement());
 
-    // if (userData) {
-    //   this.router.navigate('start-page')
-    // } else {
-    //   this.router.navigate('login-page')
-    // }
-    // const header = new HeaderComponent();
-
-    // const login = new LoginPage(this.router);
-    // this.appContainer.append(login);
-    this.router.navigate('login-page');
+    if (user.isEmpty()) {
+      this.router.navigate(PAGES.login);
+    } else {
+      this.router.navigate(PAGES.game);
+      this.header.showLogoutBtn();
+    }
   }
 
-createRoutes() {
-  return [
-    {
-      path: '',
-      callback: () => {
-        this.setContent(new LoginPage(this.router))
+  createRoutes() {
+    return [
+      {
+        path: '',
+        callback: () => {
+          this.setContent(new LoginPage(this.router));
+        },
       },
-    },
-    {
-      path: PAGES.login,
-      callback: () => {
-        this.setContent(new LoginPage(this.router));
+      {
+        path: PAGES.login,
+        callback: () => {
+          this.setContent(new LoginPage(this.router));
+        },
       },
-    },
-    {
-      path: PAGES.start,
-      callback: () => {
-        this.setContent(new StartPage(this.router));
+      {
+        path: PAGES.start,
+        callback: () => {
+          this.setContent(new StartPage(this.router, this.header));
+        },
       },
-    },
-    {
-      path: PAGES.game,
-      callback: () => { },
-    },
-    {
-      path: PAGES.notFound,
-      callback: () => { },
-    },
-  ];
-}
+      {
+        path: PAGES.game,
+        callback: () => {
+          this.setContent(new GamePage(this.router));
+        },
+      },
+      {
+        path: PAGES.notFound,
+        callback: () => { },
+        // component: async () => {
+        //         return returnStartOrLoginPage(router);
+        //      },
+      },
+    ];
+  }
 
   private setContent(content: BaseComponent) {
     this.appContainer.getElement().innerHTML = '';

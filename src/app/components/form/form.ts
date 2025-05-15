@@ -1,18 +1,19 @@
 import './form.scss';
 
 import BaseComponent from "../base-component";
-import { Button } from '../button/button';
+import ButtonComponent from '../button/button';
 import { InputComponent } from '../input/input';
 import { ErrorMessage } from './errorMessage/error-message';
-import { user } from '../../store/user-store/user-store';
 import Router from '../../router/router';
+import { user } from '../../store/user-store/user-store';
+import { PAGES } from '../../router/pages';
 
 const INPUT_FIELDS_ARR = ['First Name', 'Surname'];
 const ID_ARR = ['firstName', 'surName'];
 
 const regExp: RegExp = /^[a-zA-Z]+$/;
 
-export class FormComponent extends BaseComponent {
+export default class FormComponent extends BaseComponent {
   inputsWrappers: BaseComponent[];
   inputs: InputComponent[] = [];
   router: Router;
@@ -20,7 +21,6 @@ export class FormComponent extends BaseComponent {
   constructor(router: Router) {
     super({ tagName: 'form', classNames: ['login__form'], attributes: { novalidate: '' } });
     this.router = router;
-
     this.setAttributes({ name: 'loginForm' })
     this.drawTitle();
     this.inputsWrappers = this.drawInputs();
@@ -28,13 +28,16 @@ export class FormComponent extends BaseComponent {
 
     this.addListener('submit', (event) => {
       event.preventDefault();
+
       const userData = {
         firstName: this.inputs[0].getValue(),
         surname: this.inputs[1].getValue(),
       };
 
-      user.setUser('user-data', userData);
-      // store.user.setUser(userData);
+      // user.setUser('user-data', userData);
+      // console.log(user);
+      user.saveUser(userData);
+      this.router.navigate(PAGES.start);
   })
 }
 
@@ -89,7 +92,7 @@ export class FormComponent extends BaseComponent {
   }
 
   private drawSubmitButton(): void {
-    const submitBtn = new Button('submit', 'Log in');
+    const submitBtn = new ButtonComponent('submit', 'Log in');
     submitBtn.disableBtn();
     this.append(submitBtn);
 
@@ -98,11 +101,6 @@ export class FormComponent extends BaseComponent {
         submitBtn.enableBtn();
       }
     });
-
-    submitBtn.addListener('click', (event) => {
-      event.preventDefault();
-      this.router.navigate('start-page');
-    })
   }
 
   // private getUserData() {

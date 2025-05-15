@@ -1,44 +1,65 @@
-type UserType = {
+export type UserType = {
   firstName: string;
   surname: string;
 };
 
-class User {
-  user: UserType;
+export class User {
   storage: Storage;
 
-  constructor(userData: UserType = { firstName: '', surname: '' }) {
-    this.user = userData;
+  constructor() {
     this.storage = window.localStorage;
-
     // this.store = store;
-    // const savedUser = this.store.getUser();
     // if (savedUser) {
     //   this.setName(savedUser.firstName, savedUser.lastName, false);
     // }
   }
   
-  // public getUser(): UserType {
-  //   return this.user;
+  public saveUser(value: UserType) {
+    this.storage.setItem('user', JSON.stringify(value));
+  }
+
+  public getUser() {
+    const user = this.storage.getItem('user');
+    if (user !== null) {
+      return JSON.parse(user);
+    }
+  }
+
+  public getFullName() {
+    const firstName = Object.values(this.getUser())[0];
+    const surName = Object.values(this.getUser())[1];
+    return `${firstName} ${surName}`;
+  }
+
+  public isEmpty() {
+    for (const prop in this.getUser()) {
+      return false;
+    }
+    return true;
+  }
+
+  public clearUser() {
+    this.storage.clear()
+  }
+
+  // public isEmpty(): boolean {
+  //   return this.user.firstName === '' && this.user.surname === '';
   // }
 
-  public isEmpty(): boolean {
-    return this.user.firstName === '' && this.user.surname === '';
-  }
+  // public setUser(key: string, value: UserType) {
+  //   this.storage.setItem(key, JSON.stringify(value));
+  //   this.user = this.storage.getItem(key);
+  //   console.log(this.user);
+  // }
 
-  public setUser(key: string, value: UserType) {
-    this.storage.setItem(key, JSON.stringify(value));
-    console.log(this.storage);
-  }
+  // public getFullName(): string {
+  //   return `${this.user.firstName} ${this.user.surname}`;
+  // }
 
-  public getFullName(): string {
-    return `${this.user.firstName} ${this.user.surname}`;
-  }
-
-  public clear(): void {
-    this.user.firstName = '';
-    this.user.surname = '';
-  }
+  // public clear(): void {
+  //   this.user.firstName = '';
+  //   this.user.surname = '';
+  // }
 
   // public getUser(): UserType | null{
   //   const data = this.get(STORE_USER);
@@ -65,82 +86,7 @@ class User {
 
 export const user = new User();
 
-// class Store {
-//   public user: User;
-//   public game: Game;
 
-//   constructor() {
-//     this.user = new User();
-//     this.game = new Game();
-//   }
-// }
-
-
-// class Game {
-
-// }
-
-// const store = new Store();
-
-
-
-// export default class User {
-//   public firstName = '';
-
-//   public lastName = '';
-
-//   private store: Store;
-
-//   constructor(store: Store) {
-//     this.store = store;
-//     const savedUser = this.store.getUser();
-//     if (savedUser) {
-//       this.setName(savedUser.firstName, savedUser.lastName, false);
-//     }
-//   }
-
-//   public setName(firstName: string, lastName: string, toStore = true): void {
-//     this.firstName = firstName;
-//     this.lastName = lastName;
-//     if (toStore) {
-//       this.store.setUser(this);
-//     }
-//   }
-  
-//   public getFullName(): string {
-//     return `${this.firstName} ${this.lastName}`;
-//   }
-  
-//   public isEmpty(): boolean {
-//     return this.firstName === '' && this.lastName === '';
-//   }
-
-//   public clear(): void {
-//     this.firstName = '';
-//     this.lastName = '';
-//   }
-// }
-
-
-
-
-// export default class Store {
-//   private storage;
-
-//   private storeKey;
-
-//   constructor( ) {
-//     this.storage = window.localStorage;
-//     this.storeKey = STORE_NAME;
-//   }
-
-//   public getUser(): UserType | null{
-//     const data = this.get(STORE_USER);
-//     if (isUserType(data)) {
-//       return data;
-//     }
-//     return null
-//   }
 
 //   public setUser(user: User): void{
 //     const data: UserType = {
@@ -216,4 +162,31 @@ export const user = new User();
 
   
   
+// }
+
+
+
+
+// export type LocalData = {
+//   [key: string]: string;
+// };
+
+// export class LocalStorage {
+//   static save(key: string, data: LocalData) {
+//     const JSONdata = JSON.stringify(data);
+//     window.localStorage.setItem(key, JSONdata);
+//   }
+
+//   static get(key: string): LocalData | null {
+//     const data = localStorage.getItem(key);
+//     if (nonNullable(data)) {
+//       return JSON.parse(data);
+//     }
+
+//     return null;
+//   }
+
+//   static clear() {
+//     window.localStorage.clear();
+//   }
 // }
