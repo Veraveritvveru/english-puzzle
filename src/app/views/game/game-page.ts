@@ -1,23 +1,21 @@
 import './game-page.scss';
 import BaseComponent from "../../components/base-component";
 import Router from "../../router/router";
-import { GameHeader } from "./game-header/game-header";
-import { SelectMenu } from './game-header/select-menu';
+import { SelectMenu } from './select-menu/select-menu';
 
 export class GamePage extends BaseComponent {
   router: Router;
 
   constructor(router: Router) {
-    super({tagName: 'section', classNames: ['game-page']});
+    super({ tagName: 'section', classNames: ['game-page'] });
     this.router = router;
 
-    
-    const gameHeader = new GameHeader();
-    this.append(gameHeader);
     const selectMenu = new SelectMenu(this);
-    gameHeader.append(selectMenu);
+    this.append(selectMenu);
   }
 }
+
+
 
 // export default class Game extends BaseElement {
 //   router: Router;

@@ -30,7 +30,7 @@ export class SelectComponent extends BaseComponent {
         classNames: ['select__item'], 
         textContent: `${selectName[0].toUpperCase()}${selectName.slice(1)} ${i}`,
       });
-      selectItem.setAttributes({id: `${selectName}${i}`})
+      selectItem.setAttributes({id: `${selectName}${i}`});
       this.selectBody.append(selectItem);
     }
   }

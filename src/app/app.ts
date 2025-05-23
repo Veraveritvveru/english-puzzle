@@ -7,7 +7,7 @@ import { PAGES } from './router/pages';
 import { StartPage } from './views/start/start-page';
 import HeaderComponent from './components/header/header';
 import { GamePage } from './views/game/game-page';
-import { user } from './store/user-store/user-store';
+import { user } from './store/user-store';
 
 export default class App {
   private readonly appContainer: BaseComponent;
@@ -32,7 +32,7 @@ export default class App {
     if (user.isEmpty()) {
       this.router.navigate(PAGES.login);
     } else {
-      this.router.navigate(PAGES.game);
+      this.router.navigate(PAGES.start);
       this.header.showLogoutBtn();
     }
   }

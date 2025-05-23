@@ -1,11 +1,10 @@
 import './form.scss';
-
 import BaseComponent from "../base-component";
 import ButtonComponent from '../button/button';
 import { InputComponent } from '../input/input';
 import { ErrorMessage } from './errorMessage/error-message';
 import Router from '../../router/router';
-import { user } from '../../store/user-store/user-store';
+import { user } from '../../store/user-store';
 import { PAGES } from '../../router/pages';
 
 const INPUT_FIELDS_ARR = ['First Name', 'Surname'];
@@ -92,9 +91,11 @@ export default class FormComponent extends BaseComponent {
   }
 
   private drawSubmitButton(): void {
-    const submitBtn = new ButtonComponent('submit', 'Log in');
+    const submitBtn = new ButtonComponent('submit', 'login-btn');
+    const btnText = new BaseComponent({tagName: 'p', textContent: 'Login'})
     submitBtn.disableBtn();
     this.append(submitBtn);
+    submitBtn.append(btnText);
 
     this.addListener('input', () => {
       if (this.inputs.every((input) => this.validateInput(input.getValue()))) {

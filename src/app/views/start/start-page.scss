@@ -4,23 +4,36 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  font-size: 30px;
+  font-size: 2rem;
 }
 
 .start-page__content {
-  margin-top: 200px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 27vh;
+}
+
+.start-page__greeting {
+  text-align: center;
 }
 
 .rules-text {
-  font-size: 18px;
+  font-size: 1.6rem;
   font-weight: 500;
   width: 380px;
 
   text-align: center;
-
 }
 
 .start-btn {
+  font-size: 1.6rem;
+  color: constants.$text-color;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  padding: 5px 8px;
+  border: none;
+  letter-spacing: 0.7px;
   background-color: constants.$primary-color;
 }

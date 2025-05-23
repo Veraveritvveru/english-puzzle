@@ -4,7 +4,6 @@ import { WordComponent } from '../../../../components/word/word-component';
 import { ChoosenSentensesData } from '../../../../utils/types';
 import { getWordsArr } from '../../../../utils/utils';
 
-
 export class GameSource extends BaseComponent {
   sentencesData: ChoosenSentensesData;
   wordsElements: WordComponent[] = [];
@@ -13,7 +12,8 @@ export class GameSource extends BaseComponent {
     super({ tagName: 'div', classNames: ['game-source'] });
 
     this.sentencesData = sentencesData;
-    this.addWords(0);
+    this.addWords(0);   // возможсно стоит завести счетчик this.count = 0; 
+    // и обновлять его когда предлоежение запонено 
   }
 
   addWords(currentSentenceNum: number) {

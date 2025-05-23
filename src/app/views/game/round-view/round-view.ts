@@ -4,6 +4,8 @@ import { GameResult } from "./game-result/game-result";
 import { GameSource } from "./game-source/game-source";
 import { getRoundData } from '../../../utils/utils';
 import { ImageData, ChoosenSentensesData } from '../../../utils/types';
+import HintsSection from './hints-section/hints-section';
+import { GameStore, gameStore } from '../../../store/game-store';
 
 // const URL = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/images/';
 
@@ -14,18 +16,24 @@ export class RoundView extends BaseComponent {
   imageData: ImageData;
   sentencesData: ChoosenSentensesData;
   gameResult: GameResult;
+  gameStore: GameStore;
 
-  constructor(level: number, round: number,) {
+  constructor(level: number, round: number) {
     super({ tagName: 'div', classNames: ['round-view'] });
     this.level = level;
     this.round = round;
+    this.gameStore = gameStore;
 
     this.imageData = this.getImageData();
     this.sentencesData = this.getSentencesData();
 
     this.gameResult = new GameResult(this.imageData, this.sentencesData);
     const gameSource = new GameSource(this.sentencesData);
-    this.append( this.gameResult, gameSource);
+    const hintsSection = new HintsSection(this.sentencesData, this.level, this.round);
+
+    console.log(gameStore);
+    
+    this.append(hintsSection, this.gameResult, gameSource);
     this.getSentencesData();
   }
 
@@ -178,51 +186,3 @@ export class RoundView extends BaseComponent {
 //   }
 // }
 
-
-
-// export default class UserSelect {
-//   level: number;
-
-//   round: number;
-
-//   roundData: RoundData;
-
-//   sentensesData: SentenseData[];
-
-//   constructor(level: number, round: number) {
-//     this.level = level;
-//     this.round = round;
-
-//     this.roundData = this.getData();
-//     this.sentensesData = this.roundData.words;
-//   }
-
-//   private getData(): RoundData {
-//     const level = sources[this.level - 1];
-//     return level.rounds[this.round - 1];
-//   }
-
-//   getImgSrc(): string {
-//     return this.roundData.levelData.imageSrc;
-//   }
-
-//   getImageTitle(): string {
-//     return this.roundData.levelData.name;
-//   }
-
-//   getImageAuthorAndYear(): string {
-//     return `${this.roundData.levelData.author}, ${this.roundData.levelData.year}`;
-//   }
-
-//   getSentenses(): string[] {
-//     return this.sentensesData.map((elem) => elem.textExample);
-//   }
-
-//   getTranslate(): string[] {
-//     return this.sentensesData.map((elem) => elem.textExampleTranslate);
-//   }
-
-//   getAudioSrc(): string[] {
-//     return this.sentensesData.map((elem) => elem.audioExample);
-//   }
-// }

@@ -1,6 +1,6 @@
 import './header.scss';
 import BaseComponent from "../base-component";
-import { user } from '../../store/user-store/user-store';
+import { user } from '../../store/user-store';
 import Router from '../../router/router';
 import { PAGES } from '../../router/pages';
 export default class HeaderComponent extends BaseComponent {

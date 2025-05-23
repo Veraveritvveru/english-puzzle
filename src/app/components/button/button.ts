@@ -4,12 +4,11 @@ import BaseComponent from "../base-component";
 type typeBtn = 'submit' | 'button';
 
 export default class ButtonComponent extends BaseComponent {
-   constructor(typeName: typeBtn, textContent?: string) {
+   constructor(typeName: typeBtn, className: string) {
       super({
          tagName: 'button',
-         classNames: ['button'],
+         classNames: ['button', className],
          attributes: { type: typeName },
-         textContent: textContent,
       })
    }
 

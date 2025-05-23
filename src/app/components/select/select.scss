@@ -1,7 +1,8 @@
 @use '../../../global-styles/constants.scss';
 
 .select-menu {
-  font-size: 1.3rem;
+  order: 1;
+  font-size: 1.2rem;
   display: flex;
   gap: 25px;
   user-select: none;

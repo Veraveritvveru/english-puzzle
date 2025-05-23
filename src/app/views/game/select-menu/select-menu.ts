@@ -2,6 +2,7 @@ import BaseComponent from "../../../components/base-component";
 import { SelectComponent } from "../../../components/select/select-component";
 import { levelsArr } from "../../../utils/utils";
 import { RoundView } from "../round-view/round-view";
+import { gameStore } from "../../../store/game-store";
 
 export class SelectMenu extends BaseComponent {
   roundView: RoundView | null;
@@ -42,6 +43,7 @@ export class SelectMenu extends BaseComponent {
   firstRender() {
     this.roundView = new RoundView(this.currentLevel, this.currentRound);
     this.page.append(this.roundView);
+
   }
 
   chooseLevel(event: Event) {
@@ -52,6 +54,8 @@ export class SelectMenu extends BaseComponent {
     this.currentLevel = Number(choosedLevelId?.at(-1));
 
     this.selectRound.updateSelectBody('round', levelsArr[this.currentLevel - 1].roundsCount);
+    this.selectLevel.selectTitle.getElement().innerHTML = `Level ${this.currentLevel}`;
+    this.selectLevel.selectBody.removeClass('select-active');
     this.drawCurrentRound(this.currentLevel, 1);
   }
 
@@ -59,8 +63,10 @@ export class SelectMenu extends BaseComponent {
     const choosedRound = event.target as HTMLElement;
     if (!choosedRound) throw new Error('No choosed round');
     this.currentRound = Number(choosedRound.getAttribute('id')?.slice(5));
-
+    this.selectRound.selectTitle.getElement().innerHTML = `Round ${this.currentRound}`;
+    this.selectRound.selectBody.removeClass('select-active');
     this.drawCurrentRound(this.currentLevel, this.currentRound);
+    console.log(gameStore);   //  не удалена из стораж 
   }
 
   drawCurrentRound(currentLevel: number, currentRound: number) {

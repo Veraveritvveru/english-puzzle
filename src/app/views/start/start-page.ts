@@ -2,12 +2,12 @@ import './start-page.scss';
 import BaseComponent from "../../components/base-component";
 import Router from "../../router/router";
 import HeaderComponent from '../../components/header/header';
-import { user } from '../../store/user-store/user-store';
+import { user } from '../../store/user-store';
 import { PAGES } from '../../router/pages';
+import ButtonComponent from '../../components/button/button';
 
 const rulesText = `Click on words, collect phrases.
 Words can be drag and drop. Select tooltips on the menu.`
-
 
 export class StartPage extends BaseComponent {
   router: Router;
@@ -40,7 +40,8 @@ export class StartPage extends BaseComponent {
   }
 
   drawStartBtn() {
-    const startBtn = new BaseComponent({ tagName: 'div', classNames: ['button', 'start-btn'], textContent: 'Start' })
+    const startBtn = new ButtonComponent('button', 'start-btn');
+    startBtn.setTextContent('Start');
     this.startPageContent.append(startBtn);
 
     startBtn.addListener('click', () => {
