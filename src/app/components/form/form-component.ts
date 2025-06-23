@@ -1,8 +1,9 @@
-import './form.scss';
+import './form-component.scss';
 import BaseComponent from "../base-component";
 import InputComponent from '../input/input';
 import ErrorMessage from './error-message/error-message';
 import ButtonComponent from '../button/button';
+import Router from '../../router/router';
 
 const INPUT_FIELDS_ARR = ['First Name', 'Surname'];
 const ID_ARR = ['firstName', 'surName'];
@@ -12,9 +13,11 @@ const regExp: RegExp = /^[a-zA-Z]+$/;
 export default class FormComponent extends BaseComponent {
   inputsWrappers: BaseComponent[];
   inputs: InputComponent[] = [];
+  router: Router;
 
-  constructor() {
+  constructor(router: Router) {
     super({ tagName: 'form', classNames: ['login__form'], attributes: { novalidate: '' } });
+    this.router = router;
     this.setAttributes({ name: 'loginForm' })
     this.drawTitle();
     this.inputsWrappers = this.drawInputs();
