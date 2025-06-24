@@ -1,0 +1,53 @@
+@use '../../../global-styles/constants.scss';
+
+.select-menu {
+  order: 1;
+  font-size: 1.2rem;
+  display: flex;
+  gap: 25px;
+  user-select: none;
+}
+
+.select {
+  position: relative;
+  cursor: pointer;
+  width: 80px;
+}
+
+.select__title {
+  background-color: constants.$primary-color;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.round .select__title {
+  width: 95px;
+}
+
+.select__body {
+  position: absolute;
+  display: none;
+  z-index: 1;
+  background-color: constants.$primary-color;
+  top: 100%;
+  border-radius: 5px;
+  width: 80px
+}
+
+.round .select__body {
+  width: 95px;
+}
+
+.select-active {
+  display: block;
+  max-height: 218px;
+  overflow: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #3D3D3D #d1a4d0;
+  ;
+}
+
+.select__item {
+  padding: 7px 10px;
+}
