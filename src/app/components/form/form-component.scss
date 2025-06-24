@@ -1,0 +1,43 @@
+@use '../../../global-styles/constants.scss';
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+
+  font-size: 1.5rem;
+  background: rgba(203, 220, 254, 0.70);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.form__title {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.input__wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-weight: 500;
+}
+
+input {
+  font-size: 1.8rem;
+  border-radius: 5px;
+  border: none;
+  padding: 7px 7px;
+  width: 330px;
+}
+
+.login-btn {
+  font-family: "Inter", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  background-color: constants.$primary-color;
+  padding: 5px 9px;
+  border: none;
+}

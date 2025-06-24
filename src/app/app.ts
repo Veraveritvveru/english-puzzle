@@ -19,6 +19,8 @@ export default class App {
   run() {
     const body = document.body;
     body.appendChild(this.appContainer.getElement());
+
+    this.router.navigate(PAGES.login);
   }
 
   createRoutes() {

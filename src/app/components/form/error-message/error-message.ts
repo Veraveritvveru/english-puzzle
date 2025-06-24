@@ -1,3 +1,5 @@
+import './error-message.scss';
+
 import BaseComponent from "../../base-component";
 
 export default class ErrorMessage extends BaseComponent {
