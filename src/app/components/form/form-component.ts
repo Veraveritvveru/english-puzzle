@@ -4,6 +4,8 @@ import InputComponent from '../input/input';
 import ErrorMessage from './error-message/error-message';
 import ButtonComponent from '../button/button';
 import Router from '../../router/router';
+import { user } from '../../store/user-store';
+import { PAGES } from '../../router/pages';
 
 const INPUT_FIELDS_ARR = ['First Name', 'Surname'];
 const ID_ARR = ['firstName', 'surName'];
@@ -26,12 +28,15 @@ export default class FormComponent extends BaseComponent {
     this.addListener('submit', (event) => {
       event.preventDefault();
 
-      // const userData = {
-      //   firstName: this.inputs[0].getValue(),
-      //   surname: this.inputs[1].getValue(),
-      // };
-  })
-}
+      const userData = {
+        firstName: this.inputs[0].getValue(),
+        surname: this.inputs[1].getValue(),
+      };
+
+      user.saveUser(userData);
+      this.router.navigate(PAGES.start);
+    })
+  }
 
   private drawTitle(): void {
     const loginTitle = new BaseComponent({

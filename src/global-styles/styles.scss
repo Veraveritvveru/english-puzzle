@@ -54,3 +54,12 @@ body {
   padding-left: 16px;
   padding-right: 16px;
 }
+
+.hidden {
+  opacity: 0;
+  cursor: default;
+}
+
+.none {
+  display: none;
+}
