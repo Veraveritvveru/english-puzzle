@@ -4,7 +4,7 @@ import { wordCollectionLevel3 as level3 } from "../data/wordCollectionLevel3";
 import { wordCollectionLevel4 as level4 } from "../data/wordCollectionLevel4";
 import { wordCollectionLevel5 as level5 } from "../data/wordCollectionLevel5";
 import { wordCollectionLevel6 as level6 } from "../data/wordCollectionLevel6";
-import { SentenceData, RoundsData, ChoosenSentensesData } from "./types";
+import { RoundsData, SentenceData, ChoosenSentensesData } from "./types";
 
 export const levelsArr = [
   level1,
