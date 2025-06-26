@@ -15,7 +15,7 @@ export default class SelectComponent extends BaseComponent {
     this.updateSelectBody(selectName, selectCount);
   }
 
-  private showSelectBody(event: Event): void {
+  public showSelectBody(event: Event): void {
     if (event.target === this.selectTitle.getElement()) {
       this.selectBody.toggleClass('select-active');
     }

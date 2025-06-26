@@ -3,6 +3,7 @@ import './app.scss';
 import BaseComponent from "./components/base-component";
 import { PAGES } from './router/pages';
 import LoginPage from './views/login/login-page';
+import StartPage from './views/start/start-page';
 import HeaderComponent from './components/header/header';
 import Router from './router/router';
 import { user } from './store/user-store';
@@ -47,12 +48,12 @@ export default class App {
           this.setContent(new LoginPage(this.router));
         },
       },
-      // {
-      //   path: PAGES.start,
-      //   callback: async () => {
-      //     this.setContent(new StartPage(this.router, this.header));
-      //   },
-      // },
+      {
+        path: PAGES.start,
+        callback: async () => {
+          this.setContent(new StartPage(this.router, this.header));
+        },
+      },
       // {
       //   path: PAGES.game,
       //   callback: () => {

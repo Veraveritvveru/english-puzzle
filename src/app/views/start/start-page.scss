@@ -1,0 +1,39 @@
+@use '../../../global-styles/constants.scss';
+
+.start-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.start-page__content {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 27vh;
+}
+
+.start-page__greeting {
+  text-align: center;
+}
+
+.rules-text {
+  font-size: 1.6rem;
+  font-weight: 500;
+  width: 380px;
+
+  text-align: center;
+}
+
+.start-btn {
+  font-size: 1.6rem;
+  color: constants.$text-color;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  padding: 5px 8px;
+  border: none;
+  letter-spacing: 0.7px;
+  background-color: constants.$primary-color;
+}

@@ -1,7 +1,7 @@
 import BaseComponent from "../../../components/base-component";
 import SelectComponent from "../../../components/select/select-component";
 import { levelsArr } from "../../../utils/utils";
-import { RoundView } from "../round-view/round-view";
+import  RoundView from "../round-view/round-view";
 
 export class SelectMenu extends BaseComponent {
   roundView: RoundView | null;
@@ -21,17 +21,17 @@ export class SelectMenu extends BaseComponent {
     this.selectRound = new SelectComponent('round', levelsArr[0].roundsCount);
     this.append(this.selectLevel, this.selectRound);
 
-    this.selectLevel.addListener('click', (event) => {
+    this.selectLevel.addListener('click', (event: Event) => {
       this.selectLevel.showSelectBody(event);
     });
-    this.selectLevel.selectBody.addListener('click', (event) => {
+    this.selectLevel.selectBody.addListener('click', (event: Event) => {
       this.chooseLevel(event);
     });
 
-    this.selectRound.addListener('click', (event) => {
+    this.selectRound.addListener('click', (event: Event) => {
       this.selectRound.showSelectBody(event);
     });
-    this.selectRound.selectBody.addListener('click', (event) => {
+    this.selectRound.selectBody.addListener('click', (event: Event) => {
       this.chooseRound(event);
     });
 
