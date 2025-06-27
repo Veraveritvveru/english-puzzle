@@ -2,11 +2,13 @@ import './app.scss';
 
 import BaseComponent from "./components/base-component";
 import { PAGES } from './router/pages';
-import LoginPage from './views/login/login-page';
-import StartPage from './views/start/start-page';
-import HeaderComponent from './components/header/header';
 import Router from './router/router';
 import { user } from './store/user-store';
+import { Route } from './utils/types';
+import LoginPage from './views/login/login-page';
+import HeaderComponent from './components/header/header';
+import StartPage from './views/start/start-page';
+import GamePage from './views/game/game-page';
 
 export default class App {
   private readonly appContainer: BaseComponent;
@@ -20,7 +22,7 @@ export default class App {
     this.header = new HeaderComponent(this.router);
   }
 
-  run() {
+  public run(): void {
     const body = document.body;
     body.appendChild(this.header.getElement());
     body.appendChild(this.appContainer.getElement());
@@ -31,10 +33,9 @@ export default class App {
       this.router.navigate(PAGES.start);
       this.header.showLogoutBtn();
     }
-
   }
 
-  createRoutes() {
+  private createRoutes(): Route[] {
     return [
       {
         path: '',
@@ -54,12 +55,12 @@ export default class App {
           this.setContent(new StartPage(this.router, this.header));
         },
       },
-      // {
-      //   path: PAGES.game,
-      //   callback: () => {
-      //     this.setContent(new GamePage(this.router));
-      //   },
-      // },
+      {
+        path: PAGES.game,
+        callback: async () => {
+          this.setContent(new GamePage(this.router));
+        },
+      },
       // {
       //   path: PAGES.notFound,
       //   callback: () => { },
@@ -67,9 +68,8 @@ export default class App {
     ];
   }
 
-  private setContent(content: BaseComponent) {
+  private setContent(content: BaseComponent): void {
     this.appContainer.getElement().innerHTML = '';
     this.appContainer.append(content);
   }
-
 }

@@ -6,11 +6,10 @@ export class GameResult extends BaseComponent {
 
   constructor() {
     super({ tagName: 'div', classNames: ['game-result'] });
-
     this.drawResultBlock();
   }
 
-  drawResultBlock() {
+  private drawResultBlock(): void {
     for (let i = 0; i <= 9; i++) {
       const sentenceLine = new BaseComponent({ tagName: 'div', classNames: ['sentence-line'] });
       this.append(sentenceLine);

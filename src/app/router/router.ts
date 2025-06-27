@@ -1,7 +1,4 @@
-export type Route = {
-  path: string;
-  callback: () => void;
-}
+import { Route } from "../utils/types";
 
 export default class Router {
   routes: Route[];

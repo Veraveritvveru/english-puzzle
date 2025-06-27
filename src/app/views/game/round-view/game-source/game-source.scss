@@ -1,17 +1,16 @@
 @use '../../../../../global-styles/constants.scss';
 
-.game-result {
+.game-source {
   display: flex;
-  flex-direction: column;
-
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 700px;
+  height: 91px;
+  padding: 5px;
   border-radius: 5px;
   border: 2px solid constants.$primary-color;
   background-color: constants.$bg-blue-color;
-  background-size: contain;
-}
 
-.sentence-line {
-  display: flex;
-  height: 35px;
-  width: 700px;
+  column-gap: 20px;
+  row-gap: 7px;
 }

@@ -1,3 +1,8 @@
+export type Route = {
+  path: string;
+  callback: () => Promise<void>;
+}
+
 export type RoundsData = {
   levelData: {
     id: string,
