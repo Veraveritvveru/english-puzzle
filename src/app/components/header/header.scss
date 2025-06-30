@@ -17,18 +17,3 @@
   font-size: 1.8rem;
   font-weight: 500;
 }
-
-.logout-btn {
-  display: flex;
-  align-items: center;
-  align-self: center;
-  background-color: constants.$primary-color;
-  height: 26px;
-  border-radius: 5px;
-}
-
-.logout-btn__text {
-  font-size: 1.4rem;
-  padding-left: 14px;
-  padding-right: 14px;
-}

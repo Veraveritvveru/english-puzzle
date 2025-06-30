@@ -54,6 +54,7 @@ export class SelectMenu extends BaseComponent {
 
     this.selectRound.updateSelectBody('round', levelsArr[this.currentLevel - 1].roundsCount);
     this.selectLevel.selectTitle.getElement().innerHTML = `Level ${this.currentLevel}`;
+    this.selectRound.selectTitle.getElement().innerHTML = `Round 1`;
     this.selectLevel.selectBody.removeClass('select-active');
     this.drawCurrentRound(this.currentLevel, 1);
   }

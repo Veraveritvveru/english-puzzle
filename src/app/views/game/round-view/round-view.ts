@@ -5,6 +5,7 @@ import { GameResult } from "./game-result/game-result";
 import GameSource from "./game-source/game-source";
 import { getRoundData } from '../../../utils/utils';
 import { ImageData, ChoosenSentensesData } from '../../../utils/types';
+import GameButtons from '../game-buttons/game-buttons';
 
 export default class RoundView extends BaseComponent {
   level: number;
@@ -15,6 +16,7 @@ export default class RoundView extends BaseComponent {
   gameStore: GameStore;
   gameResult: GameResult;
   gameSource: GameSource;
+  gameButtons: GameButtons;
 
   constructor(level: number, round: number) {
     super({ tagName: 'div', classNames: ['round-view'] });
@@ -27,7 +29,8 @@ export default class RoundView extends BaseComponent {
 
     this.gameResult = new GameResult();
     this.gameSource = new GameSource(this.sentencesData, this.imageData, this.gameResult, 0);
-    this.append(this.gameResult, this.gameSource);
+    this.gameButtons = new GameButtons();
+    this.append(this.gameResult, this.gameSource, this.gameButtons);
   }
 
   private getImageData(): ImageData {
