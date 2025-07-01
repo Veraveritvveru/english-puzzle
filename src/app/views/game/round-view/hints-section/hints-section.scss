@@ -1,0 +1,31 @@
+.hints-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 700px;
+}
+
+.translate-block {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.translate__sentense {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.hints__buttons {
+  display: flex;
+  order: 3;
+  gap: 5px;
+}
+
+.play-btn {
+  cursor: pointer;
+  user-select: none;
+}
