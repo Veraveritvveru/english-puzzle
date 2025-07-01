@@ -4,19 +4,28 @@ import CheckContinue from './check-continue/check-contionue';
 import AutoComplete from './autoComplete/autoComplete';
 import GameSource from '../round-view/game-source/game-source';
 import { GameResult } from '../round-view/game-result/game-result';
+import HintsSection from '../round-view/hints-section/hints-section';
 
 export default class GameButtons extends BaseComponent {
   checkContinue: CheckContinue;
   autoComplete: AutoComplete;
   gameSource: GameSource;
   gameResult: GameResult;
+  hintsSection: HintsSection;
 
-  constructor(gameResult: GameResult, gameSource: GameSource, level: number, round: number) {
+  constructor(
+    hintsSection: HintsSection,
+    gameResult: GameResult, 
+    gameSource: GameSource, 
+    level: number, 
+    round: number
+  ) {
     super({ tagName: 'div', classNames: ['game-buttons'] });
     this.gameResult = gameResult;
     this.gameSource = gameSource;
+    this.hintsSection = hintsSection;
 
-    this.checkContinue = new CheckContinue(level, round);
+    this.checkContinue = new CheckContinue(this.gameSource, level, round, this.hintsSection);
     this.autoComplete = new AutoComplete(this.gameResult, this.gameSource, this.checkContinue, level, round);
     this.append(this.autoComplete, this.checkContinue);
   }

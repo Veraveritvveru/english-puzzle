@@ -29,7 +29,7 @@ export default class GameSource extends BaseComponent<HTMLDivElement> {
     this.addWords(this.count);
   }
 
-  private addWords(currentSentenceNum: number): void {
+  public addWords(currentSentenceNum: number): void {
     const currentSentence = this.sentencesData.sentences[currentSentenceNum];
     const wordsInSentenceArr = getWordsArr(this.sentencesData, currentSentenceNum);
 
@@ -62,5 +62,11 @@ export default class GameSource extends BaseComponent<HTMLDivElement> {
   private updateDOMOrder(wordsElemArr: WordComponent[]): void {
     this.element.innerHTML = '';
     wordsElemArr.forEach((word) => this.append(word));
+  }
+
+  public removeWords():void {
+    this.shuffledWordsElements = [];
+    this.originalWordsElements = [];
+    this.getElement().innerHTML = '';
   }
 }
