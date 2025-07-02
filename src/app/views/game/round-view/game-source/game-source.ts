@@ -69,4 +69,26 @@ export default class GameSource extends BaseComponent<HTMLDivElement> {
     this.originalWordsElements = [];
     this.getElement().innerHTML = '';
   }
+
+  public showBackgroundImg(count: number):void {
+    const imageSrc = this.imageData.imageSrc;
+    let lengthCount = 0;
+
+    for (let i = 0; i < this.originalWordsElements.length; i++) {
+      if (this.widthArr) {
+        this.originalWordsElements[i].setBackgroundImgInBody(imageSrc, lengthCount, count * 10);
+        lengthCount += this.widthArr[i];
+        this.originalWordsElements[i].setBackgroundImgInRight(imageSrc, lengthCount - 6, count * 10);
+      }
+    }
+  }
+
+  public hideBackgroundImg(): void {
+    for (let i = 0; i < this.originalWordsElements.length; i++) {
+      if (this.widthArr) {
+        this.originalWordsElements[i].setBackgroundImgInBody('', 0, 0);
+        this.originalWordsElements[i].setBackgroundImgInRight('', 0, 0);
+      }
+    }
+  }
 }

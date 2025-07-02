@@ -46,4 +46,18 @@ export default class WordComponent extends BaseComponent {
   public setTextContent(content: string): void {
     this.wordBody?.setTextContent(content);
   }
+
+    public setBackgroundImgInBody(imgSrc: string | undefined, lengthCount: number, y: number): void {
+    this.wordBody?.setBackgroundImg(imgSrc);
+    if (this.wordBody) {
+      this.wordBody.getElement().style.backgroundPosition = `${-lengthCount}px ${y}%`;
+    }
+  }
+
+  public setBackgroundImgInRight(imgSrc: string | undefined, lengthCount: number, y: number): void {
+    this.rightSpan?.setBackgroundImg(imgSrc);
+    if (this.rightSpan) {
+      this.rightSpan.getElement().style.backgroundPosition = `${-lengthCount}px ${y}%`;
+    }
+  }
 }

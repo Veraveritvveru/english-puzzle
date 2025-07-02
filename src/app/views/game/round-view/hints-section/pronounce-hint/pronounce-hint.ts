@@ -21,8 +21,4 @@ export default class PronounceHint extends HintComponent {
     this.audio.src = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/${newSrc}`;
   }
 
-// public stop() {
-//   this.audio.addEventListener('onended', () => {
-//     console.log(stop);
-//   })
 }
