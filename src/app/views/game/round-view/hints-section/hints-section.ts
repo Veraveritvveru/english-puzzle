@@ -5,10 +5,13 @@ import { ChoosenSentensesData, ImageData } from '../../../../utils/types';
 import { GameStore, gameStore } from '../../../../store/game-store';
 import GameSource from '../game-source/game-source';
 import ImageHint from './image-hint/image-hint';
+import HintComponent from '../../../../components/hint/hint';
 
 export default class HintsSection extends BaseComponent {
   pronounceHint: PronounceHint | undefined;
   imageHint: ImageHint | undefined;
+  translateHint: HintComponent | undefined;
+  translateSentence: BaseComponent | undefined;
   sentenceData: ChoosenSentensesData;
   hintsButtons: BaseComponent;
   playBtn: BaseComponent;
@@ -40,6 +43,7 @@ export default class HintsSection extends BaseComponent {
 
     this.drawPronounceHint(this.count);
     this.drawImageHint();
+    this.drawTranslateHint();
   }
 
   private drawPronounceHint(count: number): void {
@@ -83,16 +87,54 @@ export default class HintsSection extends BaseComponent {
     }
   }
 
-  drawImageHint() {
+  private drawImageHint() {
     const imageSrc = this.imageData.imageSrc;
-    const imageHint = new ImageHint(imageSrc, this.gameSource, this.count);
-    this.hintsButtons.append(imageHint);
+    this.imageHint = new ImageHint(imageSrc, this.gameSource, this.count);
+    this.hintsButtons.append(this.imageHint);
+  }
+
+  drawTranslateHint() {
+    this.translateSentence = new BaseComponent({ tagName: 'p', classNames: ['translate__sentense'] });
+    this.translateHint = new HintComponent({ className: 'translate', iconName: 'subtitles_off' });
+    this.append(this.translateSentence);
+    this.hintsButtons.append(this.translateHint);
+
+    this.translateHint.addListener('click', () => {
+      this.translateToggle();
+    });
+
+    if (this.gameStore.getOption('translateHint')) {
+      this.translateHint?.onHint();
+      this.translateSentence?.setTextContent(this.sentenceData.translates[this.count]);
+    } else {
+      this.translateHint?.offHint();
+    }
+  }
+
+  translateToggle() {
+    const currentState = this.gameStore.getOption('translateHint');
+    this.gameStore.saveOption('translateHint', !currentState);
+
+    if (!currentState) {
+      this.translateHint?.onHint();
+      this.translateSentence?.setTextContent(this.sentenceData.translates[this.count]);
+    } else {
+      this.translateHint?.offHint();
+      if (this.translateSentence) this.translateSentence.getElement().innerHTML = '';
+    }
   }
 
   public updateHints(): void {
     this.count++;
     this.pronounceHint?.updateSrc(this.sentenceData.audios[this.count]);
-    this.imageHint?.updateImage(this.count);
-  }
 
+    if (this.gameStore.getOption('imageHint')) {
+      this.imageHint?.updateImage(this.count);
+    }
+
+    if (this.gameStore.getOption('translateHint')) {
+      this.translateSentence?.setTextContent('');
+      this.translateSentence?.setTextContent(this.sentenceData.translates[this.count]);
+    }
+  }
 }

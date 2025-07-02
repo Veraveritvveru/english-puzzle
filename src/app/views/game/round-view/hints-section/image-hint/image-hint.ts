@@ -28,7 +28,7 @@ export default class ImageHint extends HintComponent {
     }
   }
 
-  imageToggle() {
+  private imageToggle() {
     const currentState = this.gameStore.getOption('imageHint');
     this.gameStore.saveOption('imageHint', !currentState);
 
