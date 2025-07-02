@@ -71,6 +71,8 @@ export class SelectMenu extends BaseComponent {
   public drawCurrentRound(currentLevel: number, currentRound: number): void  {
     this.roundView?.remove();
     this.roundView = new RoundView(currentLevel, currentRound);
+    this.selectLevel.selectTitle.getElement().innerHTML = `Level ${currentLevel}`;
+    this.selectRound.selectTitle.getElement().innerHTML = `Round ${currentRound}`;
     this.page.append(this.roundView);
   }
 }

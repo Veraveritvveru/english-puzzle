@@ -11,6 +11,14 @@ export default class GamePage extends BaseComponent {
     this.router = router;
 
     const selectMenu = new SelectMenu(this);
+
+    this.element.addEventListener('next-round', (event) => {
+      const customEvent = event as CustomEvent;
+      const { level } = customEvent.detail;
+      const { round } = customEvent.detail;
+      selectMenu.drawCurrentRound(level, round);
+    })
+    
     this.append(selectMenu);
   }
 }

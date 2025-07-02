@@ -2,6 +2,7 @@ import ButtonComponent from "../../../../components/button/button";
 import GameSource from "../../round-view/game-source/game-source";
 import HintsSection from "../../round-view/hints-section/hints-section";
 import { GameStore, gameStore } from "../../../../store/game-store";
+
 export default class CheckContinue extends ButtonComponent {
   gameStore: GameStore;
   gameSource: GameSource;
@@ -41,13 +42,22 @@ export default class CheckContinue extends ButtonComponent {
   }
 
   private toNextSentence = () => {
-    this.count++;
-    this.gameSource.removeWords();
-    this.gameSource.addWords(this.count);
-    this.hintsSection.updateHints();
+    if (this.count < 9) {
+      this.count++;
+      this.gameSource.removeWords();
+      this.gameSource.addWords(this.count);
+      this.hintsSection.updateHints();
 
-    if (this.gameStore.getOption('imageHint')) {
-      this.gameSource.showBackgroundImg(this.count);
+      if (this.gameStore.getOption('imageHint')) {
+        this.gameSource.showBackgroundImg(this.count);
+      }
+    } else {
+      console.log('next-round');
+      this.element.dispatchEvent(new CustomEvent('next-round', {
+        bubbles: true,
+        detail: {level: this.level, round: this.round + 1}
+      }));
+      return;
     }
   }
 }
