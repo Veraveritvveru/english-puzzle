@@ -3,22 +3,25 @@ import BaseComponent from "../../../../components/base-component";
 import { ChoosenSentensesData, ImageData } from '../../../../utils/types';
 import WordComponent from "../../../../components/word/word-component";
 import { getWordsArr } from "../../../../utils/utils";
+import GameResult from '../game-result/game-result';
+import DragAndDrop from './drag-n-drop';
 
 export default class GameSource extends BaseComponent<HTMLDivElement> {
   sentencesData: ChoosenSentensesData;
   imageData: ImageData;
-  count: number;
-  gameResult: BaseComponent;
+  widthArr: number[] | undefined;
+  gameResult: GameResult;
+  dragAndDrop: DragAndDrop
 
   shuffledWordsElements: WordComponent[] = [];
   originalWordsElements: WordComponent[] = [];
-  widthArr: number[] | undefined;
+  count: number;
 
   constructor(
     sentencesData: ChoosenSentensesData,
     imageData: ImageData,
-    gameResult: BaseComponent,
-    count: number
+    gameResult: GameResult,
+    count: number,
   ) {
     super({ tagName: 'div', classNames: ['game-source'] });
 
@@ -27,6 +30,13 @@ export default class GameSource extends BaseComponent<HTMLDivElement> {
     this.count = count;
     this.gameResult = gameResult;
     this.addWords(this.count);
+
+    this.dragAndDrop = new DragAndDrop(
+      this.gameResult,
+      this.getElement(),
+      this.shuffledWordsElements,
+      this.count,
+    )
   }
 
   public addWords(currentSentenceNum: number): void {
@@ -59,18 +69,18 @@ export default class GameSource extends BaseComponent<HTMLDivElement> {
     this.updateDOMOrder(wordsElemArr);
   }
 
-  private updateDOMOrder(wordsElemArr: WordComponent[]): void {
+  public updateDOMOrder(wordsElemArr: WordComponent[]): void {
     this.element.innerHTML = '';
     wordsElemArr.forEach((word) => this.append(word));
   }
 
-  public removeWords():void {
+  public removeWords(): void {
     this.shuffledWordsElements = [];
     this.originalWordsElements = [];
     this.getElement().innerHTML = '';
   }
 
-  public showBackgroundImg(count: number):void {
+  public showBackgroundImg(count: number): void {
     const imageSrc = this.imageData.imageSrc;
     let lengthCount = 0;
 
@@ -90,5 +100,15 @@ export default class GameSource extends BaseComponent<HTMLDivElement> {
         this.originalWordsElements[i].setBackgroundImgInRight('', 0, 0);
       }
     }
+  }
+
+  public addDragAndDrop(count: number): void {
+    this.dragAndDrop = new DragAndDrop(
+      this.gameResult,
+      this.getElement(),
+      this.shuffledWordsElements,
+      count,
+    )
+    this.dragAndDrop.bindEvents();
   }
 }

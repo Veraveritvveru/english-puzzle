@@ -1,7 +1,7 @@
 import BaseComponent from "../../../../components/base-component";
 import ButtonComponent from "../../../../components/button/button";
 import WordComponent from "../../../../components/word/word-component";
-import { GameResult } from "../../round-view/game-result/game-result";
+import GameResult from "../../round-view/game-result/game-result";
 import GameSource from "../../round-view/game-source/game-source";
 import CheckContinue from "../check-continue/check-contionue";
 
@@ -40,9 +40,6 @@ export default class AutoComplete extends ButtonComponent {
   }
 
   private complete = () => {
-    console.log(this.currentLine);
-    console.log(this.currentWords);
-
     const lines = document.querySelectorAll('.sentence-line');
     const currentLine = lines[this.count];
     if (!currentLine) return;

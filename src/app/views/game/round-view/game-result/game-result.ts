@@ -1,7 +1,6 @@
 import './game-result.scss';
 import BaseComponent from "../../../../components/base-component";
-
-export class GameResult extends BaseComponent {
+export default class GameResult extends BaseComponent {
   sentenceLines: BaseComponent[] = [];
 
   constructor() {

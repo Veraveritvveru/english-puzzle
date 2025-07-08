@@ -3,7 +3,7 @@ import BaseComponent from '../../../components/base-component';
 import CheckContinue from './check-continue/check-contionue';
 import AutoComplete from './autoComplete/autoComplete';
 import GameSource from '../round-view/game-source/game-source';
-import { GameResult } from '../round-view/game-result/game-result';
+import GameResult from '../round-view/game-result/game-result';
 import HintsSection from '../round-view/hints-section/hints-section';
 import { SelectMenu } from '../select-menu/select-menu';
 
@@ -29,7 +29,7 @@ export default class GameButtons extends BaseComponent {
     this.hintsSection = hintsSection;
     this.selectMenu = selectMenu;
 
-    this.checkContinue = new CheckContinue(this.gameSource, level, round, this.hintsSection, this.selectMenu);
+    this.checkContinue = new CheckContinue(this.gameResult, this.gameSource, level, round, this.hintsSection, this.selectMenu);
     this.autoComplete = new AutoComplete(this.gameResult, this.gameSource, this.checkContinue, level, round);
     this.append(this.autoComplete, this.checkContinue);
   }

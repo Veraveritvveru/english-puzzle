@@ -1,7 +1,7 @@
 import './round-view.scss';
 import BaseComponent from "../../../components/base-component";
 import { GameStore, gameStore } from '../../../store/game-store';
-import { GameResult } from "./game-result/game-result";
+import GameResult from "./game-result/game-result";
 import GameSource from "./game-source/game-source";
 import { getRoundData } from '../../../utils/utils';
 import { ImageData, ChoosenSentensesData } from '../../../utils/types';
@@ -12,6 +12,7 @@ import { SelectMenu } from '../select-menu/select-menu';
 export default class RoundView extends BaseComponent {
   level: number;
   round: number;
+  count: number;
   imageData: ImageData;
   sentencesData: ChoosenSentensesData;
 
@@ -28,12 +29,14 @@ export default class RoundView extends BaseComponent {
     this.round = round;
     this.gameStore = gameStore;
     this.selectMenu = selectMenu;
+    this.count = 0;
 
     this.imageData = this.getImageData();
     this.sentencesData = this.getSentencesData();
   
     this.gameResult = new GameResult();
-    this.gameSource = new GameSource(this.sentencesData, this.imageData, this.gameResult, 0);
+    this.gameSource = new GameSource(this.sentencesData, this.imageData, this.gameResult, this.count);
+    
     this.hintsSection = new HintsSection(this.sentencesData, this.gameSource, this.imageData);
     this.gameButtons = new GameButtons(
       this.hintsSection,
