@@ -47,3 +47,13 @@
 .online .left {
   background-color: transparent;
 }
+
+.word_correct .word-body,
+.word_correct .left {
+  filter: drop-shadow(2px 2px 6px #14be04);
+}
+
+.word_wrong .word-body,
+.word_wrong .left {
+  filter: drop-shadow(2px 2px 6px #f10b0b);
+}

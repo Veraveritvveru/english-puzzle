@@ -16,23 +16,10 @@ export default class ImageHint extends HintComponent {
     this.count = count;
 
     this.addListener('click', () => {
-      this.imageToggle();
+      this.imageToggle(this.count);
     });
 
     if (this.gameStore.getOption('imageHint')) {
-      this.onHint();
-      this.gameSource.showBackgroundImg(count);
-    } else {
-      this.offHint();
-      this.gameSource.hideBackgroundImg();
-    }
-  }
-
-  private imageToggle() {
-    const currentState = this.gameStore.getOption('imageHint');
-    this.gameStore.saveOption('imageHint', !currentState);
-
-    if (!currentState) {
       this.onHint();
       this.gameSource.showBackgroundImg(this.count);
     } else {
@@ -41,7 +28,21 @@ export default class ImageHint extends HintComponent {
     }
   }
 
+  private imageToggle(count: number) {
+    const currentState = this.gameStore.getOption('imageHint');
+    this.gameStore.saveOption('imageHint', !currentState);
+
+    if (!currentState) {
+      this.onHint();
+      this.gameSource.showBackgroundImg(count);
+    } else {
+      this.offHint();
+      this.gameSource.hideBackgroundImg();
+    }
+  }
+
   public updateImage(newCount: number): void {
-    this.gameSource.showBackgroundImg(newCount);
+    this.count = newCount + 1;
+    this.gameSource.showBackgroundImg(this.count);
   }
 }

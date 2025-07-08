@@ -13,6 +13,7 @@ export default class CheckContinue extends ButtonComponent {
   selectMenu: SelectMenu;
   gameResult: GameResult;
 
+
   level: number;
   round: number;
   count: number;
@@ -38,7 +39,7 @@ export default class CheckContinue extends ButtonComponent {
     this.count = 0;
     this.hintsSection = hintsSection;
 
-    // this.disableBtn();
+    this.disableBtn();
     this.addListener('click', () => {
       if (this.getElement().textContent === 'Check') {
         this.check();
@@ -60,11 +61,11 @@ export default class CheckContinue extends ButtonComponent {
     const sortedArr = [...this.idArray].sort((a, b) => +a - +b);
 
     if (sortedArr.join('') === this.idArray.join('')) {
-      words.forEach((child) => {
-        this.hightlightWord(child, 'value');
-        this.line?.classList.add('done');
+      words.forEach((child, id) => {
+        this.hightlightWord(child, 'correct');
+        child.style.pointerEvents = 'none';
         setTimeout(() => {
-          // this.removeHighlight(words[id]);
+          this.removeHighlight(words[id]);
         }, 2500)
       });
 
@@ -78,11 +79,11 @@ export default class CheckContinue extends ButtonComponent {
   }
 
   private toNextSentence() {
-    console.log(`to nextsentnce 1 ${this.count}`);
     this.count += 1;
     this.gameSource.removeWords();
     this.gameSource.addWords(this.count);
     this.hintsSection.updateHints();
+
     if (this.gameStore.getOption('imageHint')) {
       this.gameSource.showBackgroundImg(this.count);
     }
@@ -91,6 +92,8 @@ export default class CheckContinue extends ButtonComponent {
   }
 
   private toNextRound() {
+
+    this.count = 0;
     this.element.dispatchEvent(new CustomEvent('next-round', {
       bubbles: true,
       detail: { level: this.level, round: this.round + 1 },
@@ -113,8 +116,9 @@ export default class CheckContinue extends ButtonComponent {
   }
 
   private continue() {
-    this.toNextSentence();
-
+    const autoCompleteBtn = document.querySelector('.auto-complete');
+    autoCompleteBtn?.removeAttribute('disabled');
+    
     if (this.count === 9) {
       this.toNextRound()
     }
@@ -122,13 +126,19 @@ export default class CheckContinue extends ButtonComponent {
     if (this.count === 9 && this.round >= levelsArr[this.level - 1].roundsCount) {
       this.toNextLevel()
     }
+
+    this.toNextSentence();
+
+    this.disableBtn();
+    this.setTextContent('Check');
   }
 
   hightlightWord(word: HTMLElement, value: string) {
-    console.log(word, value)
+    word.classList.add(`word_${value}`);
   }
 
   removeHighlight(word: HTMLElement) {
-   console.log(word)
+    word.classList.remove('word_correct');
+    word.classList.remove('word_wrong');
   }
 }

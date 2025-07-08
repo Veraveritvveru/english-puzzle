@@ -35,13 +35,15 @@ export default class AutoComplete extends ButtonComponent {
     this.currentWords = this.gameSource.originalWordsElements;
 
     this.addListener('click', () => {
-      this.complete();
+      this.complete(this.count);
     });
   }
 
-  private complete = () => {
+  private complete = (count: number) => {
+    console.log(this.count);
+    console.log(count)
     const lines = document.querySelectorAll('.sentence-line');
-    const currentLine = lines[this.count];
+    const currentLine = lines[count];
     if (!currentLine) return;
 
     const words = this.gameSource.originalWordsElements;
@@ -50,5 +52,14 @@ export default class AutoComplete extends ButtonComponent {
       currentLine.append(words[i].getElement());
       words[i].setClasses(['online']);
     }
+
+    this.checkContinue.setTextContent('Continue');
+    this.checkContinue.getElement().removeAttribute('disabled');
+    this.updateCount();
+    this.disableBtn();
+  }
+
+  private updateCount(): void {
+    this.count++;
   }
 }

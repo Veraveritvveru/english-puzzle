@@ -20,12 +20,13 @@ export default class HintsSection extends BaseComponent {
   gameSource: GameSource;
   imageData: ImageData;
 
-  count: number = 0;
+  count: number;
 
   constructor(
     sentenceData: ChoosenSentensesData,
     gameSource: GameSource,
     imageData: ImageData,
+    count: number,
   ) {
     super({ tagName: 'div', classNames: ['hints-section'] });
     this.hintsButtons = new BaseComponent({ tagName: 'div', classNames: ['hints__buttons'] });
@@ -33,6 +34,7 @@ export default class HintsSection extends BaseComponent {
     this.imageData = imageData;
     this.gameStore = gameStore;
     this.gameSource = gameSource;
+    this.count = count;
 
     this.playBtn = new BaseComponent({
       tagName: 'span',
