@@ -13,7 +13,6 @@ export default class CheckContinue extends ButtonComponent {
   selectMenu: SelectMenu;
   gameResult: GameResult;
 
-
   level: number;
   round: number;
   count: number;
@@ -52,7 +51,7 @@ export default class CheckContinue extends ButtonComponent {
 
   private check = () => {
     this.line = this.gameResult.sentenceLines[this.count].getElement();
-   
+
     const words = Array.from(this.line.children) as HTMLElement[];
 
     this.idArray = Array.from(this.line.children).map((word) => {
@@ -73,8 +72,29 @@ export default class CheckContinue extends ButtonComponent {
       this.setTextContent('Continue');
       this.idArray = [];
     } else {
-      console.log('not ok');
-      // this.showMistake();
+      this.showMistake();
+    }
+  }
+
+  showMistake = () => {
+    this.line = this.gameResult.sentenceLines[this.count].getElement();
+    const words = Array.from(this.line.children) as HTMLElement[];
+
+    if (this.idArray) {
+      const sortedArr = this.idArray.sort((a, b) => +a - +b);
+      for (let i = 0; i < words.length; i++) {
+        if (+words[i].id !== sortedArr[i]) {
+          this.hightlightWord(words[i], 'wrong');
+          setTimeout(() => {
+            this.removeHighlight(words[i]);
+          }, 2500)
+        } else {
+          this.hightlightWord(words[i], 'correct');
+          setTimeout(() => {
+            this.removeHighlight(words[i]);
+          }, 2500)
+        }
+      }
     }
   }
 
@@ -89,8 +109,11 @@ export default class CheckContinue extends ButtonComponent {
     }
 
     this.gameSource.addDragAndDrop(this.count);
+
+    this.element.dispatchEvent(new CustomEvent('next-sentence'));
   }
 
+  
   private toNextRound() {
 
     this.count = 0;
@@ -115,10 +138,10 @@ export default class CheckContinue extends ButtonComponent {
     }));
   }
 
-  private continue() {
+  private continue(): void {
     const autoCompleteBtn = document.querySelector('.auto-complete');
     autoCompleteBtn?.removeAttribute('disabled');
-    
+
     if (this.count === 9) {
       this.toNextRound()
     }
@@ -133,11 +156,11 @@ export default class CheckContinue extends ButtonComponent {
     this.setTextContent('Check');
   }
 
-  hightlightWord(word: HTMLElement, value: string) {
+  private hightlightWord(word: HTMLElement, value: string): void {
     word.classList.add(`word_${value}`);
   }
 
-  removeHighlight(word: HTMLElement) {
+  private removeHighlight(word: HTMLElement): void {
     word.classList.remove('word_correct');
     word.classList.remove('word_wrong');
   }

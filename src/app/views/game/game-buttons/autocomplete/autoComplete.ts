@@ -37,11 +37,13 @@ export default class AutoComplete extends ButtonComponent {
     this.addListener('click', () => {
       this.complete(this.count);
     });
+
+    this.addListener('next-sentence', () => {
+      console.log('next')
+    })
   }
 
   private complete = (count: number) => {
-    console.log(this.count);
-    console.log(count)
     const lines = document.querySelectorAll('.sentence-line');
     const currentLine = lines[count];
     if (!currentLine) return;
@@ -59,7 +61,7 @@ export default class AutoComplete extends ButtonComponent {
     this.disableBtn();
   }
 
-  private updateCount(): void {
+  public updateCount(): void {
     this.count++;
   }
 }
