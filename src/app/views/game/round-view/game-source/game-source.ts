@@ -50,7 +50,12 @@ export default class GameSource extends BaseComponent<HTMLDivElement> {
       const word = new WordComponent({ isFirst, isLast });
       this.widthArr = word.setWordsWidth(currentSentence);
 
-      word.getElement().style.width = `${this.widthArr[index]}px`;
+      if (this.widthArr[index] < 20) {
+        word.getElement().style.width = `20 px`;
+      } else {
+        word.getElement().style.width = `${this.widthArr[index]}px`;
+      }
+
       this.append(word);
       word.setTextContent(wordText);
       word.setAttributes({ 'id': `${index}` })

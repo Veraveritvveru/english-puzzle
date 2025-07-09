@@ -47,7 +47,7 @@ export default class WordComponent extends BaseComponent {
     this.wordBody?.setTextContent(content);
   }
 
-    public setBackgroundImgInBody(imgSrc: string | undefined, lengthCount: number, y: number): void {
+  public setBackgroundImgInBody(imgSrc: string | undefined, lengthCount: number, y: number): void {
     this.wordBody?.setBackgroundImg(imgSrc);
     if (this.wordBody) {
       this.wordBody.getElement().style.backgroundPosition = `${-lengthCount}px ${y}%`;

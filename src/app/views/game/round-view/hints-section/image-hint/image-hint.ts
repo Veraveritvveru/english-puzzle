@@ -41,8 +41,7 @@ export default class ImageHint extends HintComponent {
     }
   }
 
-    public updateImage(newCount: number): void {
+  public updateCount(newCount: number): void {
     this.count = newCount;
-    this.gameSource.showBackgroundImg(this.count);
   }
 }

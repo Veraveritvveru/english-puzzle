@@ -4,6 +4,8 @@ import WordComponent from "../../../../components/word/word-component";
 import GameResult from "../../round-view/game-result/game-result";
 import GameSource from "../../round-view/game-source/game-source";
 import CheckContinue from "../check-continue/check-contionue";
+import GameButtons from "../game-buttons";
+import { ImageData } from "../../../../utils/types";
 
 export default class AutoComplete extends ButtonComponent {
   gameResult: GameResult;
@@ -11,6 +13,9 @@ export default class AutoComplete extends ButtonComponent {
   currentLine: BaseComponent;
   currentWords: WordComponent[];
   checkContinue: CheckContinue;
+  parentContainer: GameButtons;
+  imageData: ImageData;
+
   level: number;
   round: number;
   count: number;
@@ -19,13 +24,17 @@ export default class AutoComplete extends ButtonComponent {
     gameResult: GameResult,
     gameSource: GameSource,
     checkContinue: CheckContinue,
+    parentContainer: GameButtons,
+    imageData: ImageData,
     level: number,
-    round: number
+    round: number,
   ) {
     super('button', 'auto-complete', 'Auto-complete');
     this.gameResult = gameResult;
     this.gameSource = gameSource;
     this.checkContinue = checkContinue;
+    this.parentContainer = parentContainer;
+    this.imageData = imageData;
 
     this.level = level;
     this.round = round;
@@ -35,12 +44,8 @@ export default class AutoComplete extends ButtonComponent {
     this.currentWords = this.gameSource.originalWordsElements;
 
     this.addListener('click', () => {
-      this.complete(this.count);
+      this.complete(this.parentContainer.getCurrentCount());
     });
-
-    this.addListener('next-sentence', () => {
-      console.log('next')
-    })
   }
 
   private complete = (count: number) => {
@@ -49,19 +54,20 @@ export default class AutoComplete extends ButtonComponent {
     if (!currentLine) return;
 
     const words = this.gameSource.originalWordsElements;
+    let xPosition = 0;
 
     for (let i = 0; i < words.length; i++) {
       currentLine.append(words[i].getElement());
       words[i].setClasses(['online']);
+      words[i].getElement().style.pointerEvents = 'none';
+
+      words[i].setBackgroundImgInBody(this.imageData.imageSrc, xPosition, count * 10);
+      xPosition += words[i].getElement().offsetWidth;
+      words[i].setBackgroundImgInRight(this.imageData.imageSrc, xPosition - 6, count * 10);
     }
 
     this.checkContinue.setTextContent('Continue');
     this.checkContinue.getElement().removeAttribute('disabled');
-    this.updateCount();
     this.disableBtn();
-  }
-
-  public updateCount(): void {
-    this.count++;
   }
 }

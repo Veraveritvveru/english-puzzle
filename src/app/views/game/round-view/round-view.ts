@@ -36,7 +36,6 @@ export default class RoundView extends BaseComponent {
   
     this.gameResult = new GameResult();
     this.gameSource = new GameSource(this.sentencesData, this.imageData, this.gameResult, this.count);
-    console.log(this.count);
     
     this.hintsSection = new HintsSection(this.sentencesData, this.gameSource, this.imageData, this.count);
     this.gameButtons = new GameButtons(
@@ -44,6 +43,7 @@ export default class RoundView extends BaseComponent {
       this.gameResult,
       this.gameSource,
       this.selectMenu,
+      this.imageData,
       this.level,
       this.round);
     this.append(this.hintsSection, this.gameResult, this.gameSource, this.gameButtons);

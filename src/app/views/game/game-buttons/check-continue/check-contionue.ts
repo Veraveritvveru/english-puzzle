@@ -5,6 +5,8 @@ import { GameStore, gameStore } from "../../../../store/game-store";
 import { levelsArr } from "../../../../utils/utils";
 import { SelectMenu } from "../../select-menu/select-menu";
 import GameResult from "../../round-view/game-result/game-result";
+import GameButtons from "../game-buttons";
+import ImageHint from "../../round-view/hints-section/image-hint/image-hint";
 
 export default class CheckContinue extends ButtonComponent {
   gameStore: GameStore;
@@ -12,6 +14,8 @@ export default class CheckContinue extends ButtonComponent {
   hintsSection: HintsSection;
   selectMenu: SelectMenu;
   gameResult: GameResult;
+  parentContainer: GameButtons;
+  imageHint: ImageHint | undefined;
 
   level: number;
   round: number;
@@ -21,6 +25,7 @@ export default class CheckContinue extends ButtonComponent {
   line: HTMLElement | undefined;
 
   constructor(
+    parentContainer: GameButtons,
     gameResult: GameResult,
     gameSource: GameSource,
     level: number,
@@ -37,6 +42,8 @@ export default class CheckContinue extends ButtonComponent {
     this.round = round;
     this.count = 0;
     this.hintsSection = hintsSection;
+    this.parentContainer = parentContainer;
+    this.imageHint = this.hintsSection.imageHint;
 
     this.disableBtn();
     this.addListener('click', () => {
@@ -46,7 +53,6 @@ export default class CheckContinue extends ButtonComponent {
         this.continue();
       }
     })
-
   }
 
   private check = () => {
@@ -100,6 +106,8 @@ export default class CheckContinue extends ButtonComponent {
 
   private toNextSentence() {
     this.count += 1;
+    this.parentContainer.incrementCount();
+    const updatedCount = this.parentContainer.getCurrentCount();
     this.gameSource.removeWords();
     this.gameSource.addWords(this.count);
     this.hintsSection.updateHints();
@@ -108,14 +116,12 @@ export default class CheckContinue extends ButtonComponent {
       this.gameSource.showBackgroundImg(this.count);
     }
 
+    this.imageHint?.updateCount(updatedCount);
     this.gameSource.addDragAndDrop(this.count);
-
-    this.element.dispatchEvent(new CustomEvent('next-sentence'));
   }
 
-  
-  private toNextRound() {
 
+  private toNextRound() {
     this.count = 0;
     this.element.dispatchEvent(new CustomEvent('next-round', {
       bubbles: true,

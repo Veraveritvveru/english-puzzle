@@ -131,7 +131,7 @@ export default class HintsSection extends BaseComponent {
     this.pronounceHint?.updateSrc(this.sentenceData.audios[this.count]);
 
     if (this.gameStore.getOption('imageHint')) {
-      this.imageHint?.updateImage(this.count);
+      this.imageHint?.updateCount(this.count);
     }
 
     if (this.gameStore.getOption('translateHint')) {
