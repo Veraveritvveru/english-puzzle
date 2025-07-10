@@ -148,7 +148,9 @@ export default class CheckContinue extends ButtonComponent {
       description.append(
         new BaseComponent({ tagName: 'div', textContent: `"${data.name}"` }),
         new BaseComponent({ tagName: 'div', textContent: `${data.author}, ${data.year}` })
-      )
+      );
+
+      this.saveRound();
     }
   }
 
@@ -192,5 +194,12 @@ export default class CheckContinue extends ButtonComponent {
   private removeHighlight(word: HTMLElement): void {
     word.classList.remove('word_correct');
     word.classList.remove('word_wrong');
+  }
+
+  private saveRound(): void {
+    this.gameStore.saveLevelData('level-data', {
+      level: this.level,
+      round: this.round,
+    });
   }
 }

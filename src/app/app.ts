@@ -61,10 +61,6 @@ export default class App {
           this.setContent(new GamePage(this.router));
         },
       },
-      // {
-      //   path: PAGES.notFound,
-      //   callback: () => { },
-      // },
     ];
   }
 

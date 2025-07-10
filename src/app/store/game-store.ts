@@ -1,3 +1,8 @@
+type LevelData = {
+  level: number,
+  round: number,
+}
+
 export class GameStore {
   storage: Storage;
 
@@ -25,6 +30,17 @@ export class GameStore {
       this.removeOption(key);
     } else {
       this.saveOption(key, data);
+    }
+  }
+
+  public saveLevelData(key: string, levelData: LevelData) {
+    this.storage.setItem(key, JSON.stringify(levelData));
+  }
+
+  public getLevelData(key: string): LevelData | undefined {
+    const levelData = this.storage.getItem(key);
+    if (levelData !== null) {
+      return JSON.parse(levelData);
     }
   }
 }

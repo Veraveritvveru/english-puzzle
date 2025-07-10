@@ -2,6 +2,7 @@ import BaseComponent from "../../../components/base-component";
 import SelectComponent from "../../../components/select/select-component";
 import { levelsArr } from "../../../utils/utils";
 import RoundView from "../round-view/round-view";
+import { GameStore, gameStore } from "../../../store/game-store";
 
 export class SelectMenu extends BaseComponent {
   roundView: RoundView | null;
@@ -10,6 +11,7 @@ export class SelectMenu extends BaseComponent {
   selectLevel: SelectComponent;
   selectRound: SelectComponent;
   page: BaseComponent;
+  gameStore: GameStore;
 
   constructor(page: BaseComponent) {
     super({ tagName: 'div', classNames: ['select-menu'] });
@@ -19,7 +21,7 @@ export class SelectMenu extends BaseComponent {
     this.page = page;
     this.selectLevel = new SelectComponent('level', 6);
     this.selectRound = new SelectComponent('round', levelsArr[this.currentLevel - 1].roundsCount);
-
+    this.gameStore = gameStore;
     this.append(this.selectLevel, this.selectRound);
 
     this.selectLevel.addListener('click', (event: Event) => {
@@ -48,7 +50,16 @@ export class SelectMenu extends BaseComponent {
   }
 
   private firstRender(): void {
-    this.roundView = new RoundView(this.currentLevel, this.currentRound, this);
+    const levelData = this.gameStore.getLevelData('level-data');
+
+    if (levelData) {
+      const { level, round } = this.getCorrectRound(levelData.level, levelData.round + 1);
+      this.currentLevel = level;
+      this.roundView = new RoundView(level, round, this);
+    } else {
+      this.roundView = new RoundView(this.currentLevel, this.currentRound, this);
+    }
+
     this.page.append(this.roundView);
   }
 
