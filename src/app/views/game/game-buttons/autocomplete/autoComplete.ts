@@ -69,5 +69,9 @@ export default class AutoComplete extends ButtonComponent {
     this.checkContinue.setTextContent('Continue');
     this.checkContinue.getElement().removeAttribute('disabled');
     this.disableBtn();
+
+    if (count === 9) {
+      this.checkContinue.endOfRound();
+    }
   }
 }

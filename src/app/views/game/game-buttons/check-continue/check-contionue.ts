@@ -7,6 +7,7 @@ import { SelectMenu } from "../../select-menu/select-menu";
 import GameResult from "../../round-view/game-result/game-result";
 import GameButtons from "../game-buttons";
 import ImageHint from "../../round-view/hints-section/image-hint/image-hint";
+import BaseComponent from "../../../../components/base-component";
 
 export default class CheckContinue extends ButtonComponent {
   gameStore: GameStore;
@@ -77,12 +78,13 @@ export default class CheckContinue extends ButtonComponent {
       this.gameSource.showBackgroundImg(this.count);
       this.setTextContent('Continue');
       this.idArray = [];
+      this.endOfRound();
     } else {
       this.showMistake();
     }
   }
 
-  showMistake = () => {
+  private showMistake = (): void => {
     this.line = this.gameResult.sentenceLines[this.count].getElement();
     const words = Array.from(this.line.children) as HTMLElement[];
 
@@ -104,7 +106,7 @@ export default class CheckContinue extends ButtonComponent {
     }
   }
 
-  private toNextSentence() {
+  private toNextSentence(): void {
     this.count += 1;
     this.parentContainer.incrementCount();
     const updatedCount = this.parentContainer.getCurrentCount();
@@ -121,7 +123,7 @@ export default class CheckContinue extends ButtonComponent {
   }
 
 
-  private toNextRound() {
+  private toNextRound(): void {
     this.count = 0;
     this.element.dispatchEvent(new CustomEvent('next-round', {
       bubbles: true,
@@ -129,7 +131,28 @@ export default class CheckContinue extends ButtonComponent {
     }));
   }
 
-  private toNextLevel() {
+  public endOfRound(): void {
+    if (this.count === 9) {
+
+      this.gameResult.setBackgroundImg(this.gameResult.imageData.imageSrc);
+      this.gameResult.getElement().style.backgroundSize = '700px 350px';
+      const sentenceLines = document.querySelectorAll('.sentence-line');
+      sentenceLines.forEach((line) => {
+        line.classList.add('hidden');
+      });
+
+      const data = this.gameResult.imageData;
+      const description = new BaseComponent({ tagName: 'div', classNames: ['image-desription'] });
+      
+      this.gameResult.append(description);
+      description.append(
+        new BaseComponent({ tagName: 'div', textContent: `"${data.name}"` }),
+        new BaseComponent({ tagName: 'div', textContent: `${data.author}, ${data.year}` })
+      )
+    }
+  }
+
+  private toNextLevel(): void {
     this.level++;
     this.round = 1;
 
@@ -149,7 +172,7 @@ export default class CheckContinue extends ButtonComponent {
     autoCompleteBtn?.removeAttribute('disabled');
 
     if (this.count === 9) {
-      this.toNextRound()
+      this.toNextRound();
     }
 
     if (this.count === 9 && this.round >= levelsArr[this.level - 1].roundsCount) {

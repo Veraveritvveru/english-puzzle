@@ -13,7 +13,6 @@ export default class TranslateHint extends HintComponent {
     super({ className: 'translate', iconName: 'subtitles_off' });
     this.gameStore = gameStore;
      this.sentenceData = sentenceData;
-    // this.imageSrc = imageSrc;
     this.gameSource = gameSource;
     this.count = count;
 

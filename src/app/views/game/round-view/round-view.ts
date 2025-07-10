@@ -34,7 +34,7 @@ export default class RoundView extends BaseComponent {
     this.imageData = this.getImageData();
     this.sentencesData = this.getSentencesData();
   
-    this.gameResult = new GameResult();
+    this.gameResult = new GameResult(this.imageData);
     this.gameSource = new GameSource(this.sentencesData, this.imageData, this.gameResult, this.count);
     
     this.hintsSection = new HintsSection(this.sentencesData, this.gameSource, this.imageData, this.count);
@@ -46,6 +46,7 @@ export default class RoundView extends BaseComponent {
       this.imageData,
       this.level,
       this.round);
+      
     this.append(this.hintsSection, this.gameResult, this.gameSource, this.gameButtons);
   }
 
@@ -54,6 +55,8 @@ export default class RoundView extends BaseComponent {
     return {
       name: roundData.levelData.name,
       imageSrc: roundData.levelData.imageSrc,
+      author: roundData.levelData.author,
+      year: roundData.levelData.year,
     }
   }
 

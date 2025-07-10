@@ -2,7 +2,6 @@ import './game-page.scss';
 import BaseComponent from "../../components/base-component";
 import Router from "../../router/router";
 import { SelectMenu } from './select-menu/select-menu';
-
 export default class GamePage extends BaseComponent {
   router: Router;
   currentLevel: number;

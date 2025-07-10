@@ -27,6 +27,8 @@ export type SentenceData = {
 export type ImageData = {
   name: string,
   imageSrc: string,
+  author: string,
+  year: string,
 }
 
 export type ChoosenSentensesData = {
