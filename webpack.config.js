@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const dirname = path.dirname(__filename);
 
 const config = {
   entry: './src/index.ts',
@@ -33,7 +33,8 @@ const config = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(dirname, 'dist'),
+    publicPath: './'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -41,7 +42,7 @@ const config = {
       filename: './index.html'
     }),
   ],
-  mode: 'development',
+  mode: 'production',
   devServer: {
     compress: true,
     port: 3000,

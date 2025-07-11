@@ -6,11 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
-    "build": "webpack",
+    "build": "webpack --mode production",
     "start": "webpack serve",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.0",
+    "gh-pages": "^6.3.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.3",
     "husky": "^8.0.0",
