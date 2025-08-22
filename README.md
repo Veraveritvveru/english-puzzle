@@ -7,15 +7,21 @@ An interactive mini-game aimed at enhancing English language skills. Players ass
 
 ## Features
 **Input Fields and Validation:** Implemented mandatory input fields for first name and surname with comprehensive validation to ensure entries meet tht specified criteria.
+
 **Access and Session Management:** Utilized local storage to securely manage user credentials and implemented logout functionality.
+
 **Basic Game Functionality:**  
 - Displaying cards with words in random order,
 - Dynamically resizing cards,
 - Drag-and-drop functionality for forming sentences, 
 - Automatic sentence completion.
+
 **Hint Functionality:** Implemented translation and pronunciation hints with toggle options.
+
 **Level and Rounds:** Implemented a feature that allows players to choose from six difficulty levels and multiple game rounds.
+
 **Completion and Background Image Revelation:** Implemented a feature that fully reveals the background image at the end of each round.
+
 
 ### Stack:
 ![SCSS](https://img.shields.io/badge/scss-%231572B6.svg?style=for-the-badge&logo=scss&logoColor=white)
