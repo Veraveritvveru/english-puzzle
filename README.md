@@ -1,6 +1,7 @@
 ## English Puzzle
 
 An interactive mini-game aimed at enhancing English language skills. Players assemble sentences from jumbled words, inspired by Lingualeo's Phrase Constructor training. The game integrates various levels of difficulty, hint options, and a unique puzzle-like experience with artwork.
+
 [Check the Live Demo](https://english-puzzle-eosin.vercel.app/#game-page)
 
 <img width="923" height="651" alt="image" src="https://github.com/user-attachments/assets/1a0cb1b0-f811-4e68-93c6-e423bcd78a76" />
